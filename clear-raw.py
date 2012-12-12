@@ -46,5 +46,11 @@ if __name__ == '__main__':
     for raw_image in raw_images:
         if os.path.splitext(raw_image)[0] not in jpeg_images_bare_names:
             orphans.append(raw_image)
+    if len(raw_images) + len(jpeg_images_bare_names) == 0:
+        print "No images found. Are you sure you wanted to check '%s' for orphaned RAW images?" % (args.folder,)
+        sys.exit(0)
+    elif len(raw_images) == 0:
+        print "No RAW images found, but %i JPEGs. I won't do anything now." % (len(),jpeg_images_bare_names)
+        sys.exit(0)
     backup_folder = None if args.no_backup else os.path.join(args.folder,args.backup_folder)
     delete(orphans, backup_folder=backup_folder)
