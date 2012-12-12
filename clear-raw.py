@@ -1,4 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python2.7
+# -*- coding: utf-8 -*-
 
 """
 Written on 2012-12-12 by Philipp Klaus <philipp.l.klaus →AT→ web.de>.
