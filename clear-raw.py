@@ -1,4 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
+
+"""
+Written on 2012-12-12 by Philipp Klaus <philipp.l.klaus →AT→ web.de>.
+Check <https://gist.github.com/4271012> for newer versions.
+
+Also check <https://gist.github.com/3155743> for a tool to
+rename JPEGs according to their EXIF shot time.
+"""
 
 import argparse, os, errno, re, shutil, sys
 
