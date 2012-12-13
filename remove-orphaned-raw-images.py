@@ -12,6 +12,7 @@ rename JPEGs according to their EXIF shot time.
 import argparse, os, errno, re, shutil, sys
 
 def delete(files, backup_folder=None):
+    if len(files) == 0: return
     if backup_folder:
         try:
             os.mkdir(backup_folder)
@@ -50,7 +51,10 @@ if __name__ == '__main__':
         print "No images found. Are you sure you wanted to check '%s' for orphaned RAW images?" % (args.folder,)
         sys.exit(0)
     elif len(raw_images) == 0:
-        print "No RAW images found, but %i JPEGs. I won't do anything now." % (len(),jpeg_images_bare_names)
+        print "No RAW images found, but %i JPEGs. Won't do anything now." % (len(jpeg_images_bare_names),)
+        sys.exit(0)
+    elif len(orphans) == 0:
+        print "%i RAW images found, and %i JPEGs but no orphans. Won't do anything now." % (len(raw_images), len(jpeg_images_bare_names))
         sys.exit(0)
     backup_folder = None if args.no_backup else os.path.join(args.folder,args.backup_folder)
-    delete(orphans, backup_folder=backup_folder)
+    delete([os.path.join(args.folder,orphan) for orphan in orphans], backup_folder=backup_folder)
