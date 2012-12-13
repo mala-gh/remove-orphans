@@ -48,9 +48,9 @@ if __name__ == '__main__':
     # sort files into raw and jpeg files
     for filename in all_files:
         # The file name of raw image ends with .CR2 for Canon EOS cameras
-        if re.match(r'(.*)\.[cC][rR]2', filename):
+        if re.match(r'(.*)\.[cC][rR]2$', filename):
             raw_images.append(filename)
-        if re.match(r'(.*)\.[jJ][pP][eE]?[gG]', filename):
+        if re.match(r'(.*)\.[jJ][pP][eE]?[gG]$', filename):
             jpeg_images_bare_names.append(os.path.splitext(filename)[0])
     # Check if there is a jpeg for each raw image
     orphans = []
