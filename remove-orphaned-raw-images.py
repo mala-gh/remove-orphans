@@ -33,10 +33,14 @@ def delete(files, backup_folder=None, verbose=True):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Cleanup of leftover raw image files (*.CR2).')
-    parser.add_argument('-n', '--no-backup', action='store_true', help='Don\'t backup orphaned raw images  -  delete them immediately.')
-    parser.add_argument('-b', '--backup-folder', default='raw_orphans', help='Folder to move orphaned raw images to.')
-    parser.add_argument('-q', '--quiet', action='store_true', help='Silence the less important output of this tool.')
-    parser.add_argument('folder', metavar='CHECK_FOLDER', default='./', nargs='?', help='Folder to check for raw images. Defaults to the current working directory')
+    parser.add_argument('-n', '--no-backup', action='store_true',
+            help='Don\'t backup orphaned raw images  -  delete them immediately.')
+    parser.add_argument('-b', '--backup-folder', default='raw_orphans',
+            help='Folder to move orphaned raw images to.')
+    parser.add_argument('-q', '--quiet', action='store_true',
+            help='Silence the less important output of this tool.')
+    parser.add_argument('folder', metavar='CHECK_FOLDER', default='./', nargs='?',
+            help='Folder to check for raw images. Defaults to the current working directory')
     args = parser.parse_args()
     verbose = not args.quiet
     raw_images, jpeg_images_bare_names = [], []
@@ -54,13 +58,17 @@ if __name__ == '__main__':
         if os.path.splitext(raw_image)[0] not in jpeg_images_bare_names:
             orphans.append(raw_image)
     if len(raw_images) + len(jpeg_images_bare_names) == 0:
-        if verbose: stderr("No images found. Are you sure you wanted to check '%s' for orphaned RAW images?" % (args.folder,))
+        if verbose: stderr("No images found. Are you sure you wanted to check '%s' for orphaned RAW images?" %
+                (args.folder,))
         sys.exit(2)
     elif len(raw_images) == 0:
-        if verbose: print "No RAW images found, but %i JPEGs. Won't do anything now." % (len(jpeg_images_bare_names),)
+        if verbose: print "No RAW images found, but %i JPEGs. Won't do anything now." % (
+                len(jpeg_images_bare_names),)
         sys.exit(0)
     elif len(orphans) == 0:
-        if verbose: print "%i RAW images found, and %i JPEGs but no orphans. Won't do anything now." % (len(raw_images), len(jpeg_images_bare_names))
+        if verbose: print "%i RAW images found, and %i JPEGs but no orphans. Won't do anything now." % (
+                len(raw_images), len(jpeg_images_bare_names))
         sys.exit(0)
     backup_folder = None if args.no_backup else os.path.join(args.folder,args.backup_folder)
     delete([os.path.join(args.folder,orphan) for orphan in orphans], backup_folder=backup_folder, verbose=verbose)
+
