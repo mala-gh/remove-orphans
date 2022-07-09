@@ -2,36 +2,36 @@
 # -*- coding: utf-8 -*-
 
 """
-remove-orphaned-raw-images.py <raw dir> [<JPG dir1> [<JPG dir2> ...]]
+remove-orphans.py <raw dir> [<JPG dir1> [<JPG dir2> ...]]
 Moves raw (NEF/RW2) files in <raw dir> to <raw dir>/raw-orphans  if no corresponding JPG in any of the JPR dirs.
 Looks recursively in all of the directories.  Creates raw-orphans/ folder if it doesn't already exist.
 
 Examples / Tests :
 
- remove-orphaned-raw-images.py .   
+ remove-orphans.py .
       Lists all NEF/RW2s in current (.) and below dirs.
       Lists all JPEGs in current (.) and below dirs.
       Moves to raw-orphans/ folder all NEF/RW2s without corresponding JPEG.
 
-remove-orphaned-raw-images.py . otherDir
+remove-orphans.py . otherDir
       Lists all NEF/RW2s in current (.) and below dirs.
       Lists all JPEGs in current (.) and below dirs AND in otherDir and below dirs.
       Moves to raw-orphans/ folder all NEF/RW2s without corresponding JPEG.
 
-remove-orphaned-raw-images.py rawDir  JPGDir1 JPGDir2 
+remove-orphans.py rawDir  JPGDir1 JPGDir2
       Lists all NEF/RW2s in rawDir and below dirs.
       Lists all JPEGs in rawDir and below dirs AND in JPGdir1 and below AND in JPGdir2 and below
       Moves to raw-orphans/ folder all NEF/RW2s without corresponding JPEG.
 
 Verify usage output:
->>> print commands.getoutput("python remove-orphaned-raw-images.py")
-usage: remove-orphaned-raw-images.py [-h] [-n] [-b BACKUP_FOLDER] [-q] [-t]
+>>> print commands.getoutput("python remove-orphans.py")
+usage: remove-orphans.py [-h] [-n] [-b BACKUP_FOLDER] [-q] [-t]
                                      RAW_folder
                                      [JPG_folders [JPG_folders ...]]
-remove-orphaned-raw-images.py: error: too few arguments
+remove-orphans.py: error: too few arguments
 
->>> print commands.getoutput("python remove-orphaned-raw-images.py -h")
-usage: remove-orphaned-raw-images.py [-h] [-n] [-b BACKUP_FOLDER] [-q] [-t]
+>>> print commands.getoutput("python remove-orphans.py -h")
+usage: remove-orphans.py [-h] [-n] [-b BACKUP_FOLDER] [-q] [-t]
                                      RAW_folder
                                      [JPG_folders [JPG_folders ...]]
 <BLANKLINE>
@@ -57,56 +57,56 @@ optional arguments:
 >>> shutil.rmtree('testDirs')
 >>> shutil.copytree('remove_orphaned_raw_images_TestDirs/masterStartDirs/', 'testDirs')
 
->>> print commands.getoutput("python remove-orphaned-raw-images.py TestDirs/01_noPicts")
+>>> print commands.getoutput("python remove-orphans.py TestDirs/01_noPicts")
 No images found. No use checking 'TestDirs/01_noPicts' for orphaned RAW images
 
->>> print commands.getoutput("python remove-orphaned-raw-images.py TestDirs/02_jpegNoRaw")
+>>> print commands.getoutput("python remove-orphans.py TestDirs/02_jpegNoRaw")
 No RAW images found, but 1 JPEGs. Won't do anything now.
 
->>> print commands.getoutput("python remove-orphaned-raw-images.py TestDirs/03_jpgMatchNEF")
+>>> print commands.getoutput("python remove-orphans.py TestDirs/03_jpgMatchNEF")
 1 RAW images found, and 1 JPEGs but no orphans. Won't do anything now.
 
->>> print commands.getoutput("python remove-orphaned-raw-images.py TestDirs/04_NefNoJpeg/")
+>>> print commands.getoutput("python remove-orphans.py TestDirs/04_NefNoJpeg/")
 Moving TestDirs/04_NefNoJpeg/DSC_1381.NEF to TestDirs/04_NefNoJpeg/raw_orphans.
 Matched JPEGs: 0,  unMatched JPEGs: 0,  orphaned raw moved: 1
 
->>> print commands.getoutput("python remove-orphaned-raw-images.py TestDirs/05_jpgNotMatchNEF/")
+>>> print commands.getoutput("python remove-orphans.py TestDirs/05_jpgNotMatchNEF/")
 Moving TestDirs/05_jpgNotMatchNEF/DSC_1381.NEF to TestDirs/05_jpgNotMatchNEF/raw_orphans.
 Matched JPEGs: 0,  unMatched JPEGs: 1,  orphaned raw moved: 1
 
->>> print commands.getoutput("python remove-orphaned-raw-images.py TestDirs/06_RW2NoJpeg/" )
+>>> print commands.getoutput("python remove-orphans.py TestDirs/06_RW2NoJpeg/" )
 Moving TestDirs/06_RW2NoJpeg/P1010393.RW2 to TestDirs/06_RW2NoJpeg/raw_orphans.
 Matched JPEGs: 0,  unMatched JPEGs: 0,  orphaned raw moved: 1
 
->>> print commands.getoutput("python remove-orphaned-raw-images.py TestDirs/07_jpgMatchRW2/" )
+>>> print commands.getoutput("python remove-orphans.py TestDirs/07_jpgMatchRW2/" )
 1 RAW images found, and 1 JPEGs but no orphans. Won't do anything now.
 
->>> print commands.getoutput("python remove-orphaned-raw-images.py testDirs/08_DupNefs/" )
+>>> print commands.getoutput("python remove-orphans.py testDirs/08_DupNefs/" )
 'testDirs/08_DupNefs/DSC_1380.NEF' is a duplicate file
 Moving testDirs/08_DupNefs/subFolder/DSC_1380.NEF to testDirs/08_DupNefs/raw_orphans.
 Matched JPEGs: 0,  unMatched JPEGs: 0,  orphaned raw moved: 1
 
->>> print commands.getoutput("python remove-orphaned-raw-images.py TestDirs/09_RawOnly TestDirs/09_jpegOnly" )
+>>> print commands.getoutput("python remove-orphans.py TestDirs/09_RawOnly TestDirs/09_jpegOnly" )
 'TestDirs/09_jpegOnly/P1010415.JPG' is a duplicate file
 Moving TestDirs/09_RawOnly/DSC_1380.NEF to TestDirs/09_RawOnly/raw_orphans.
 Matched JPEGs: 3,  unMatched JPEGs: 1,  orphaned raw moved: 1
 
->>> print commands.getoutput("python remove-orphaned-raw-images.py TestDirs/10_jpgExtraNEF/" )
+>>> print commands.getoutput("python remove-orphans.py TestDirs/10_jpgExtraNEF/" )
 Moving TestDirs/10_jpgExtraNEF/DSC_1380.NEF to TestDirs/10_jpgExtraNEF/raw_orphans.
 Matched JPEGs: 1,  unMatched JPEGs: 0,  orphaned raw moved: 1
 
->>> print commands.getoutput("python remove-orphaned-raw-images.py TestDirs/11_jpgsExtraRW2s/" )
+>>> print commands.getoutput("python remove-orphans.py TestDirs/11_jpgsExtraRW2s/" )
 Moving TestDirs/11_jpgsExtraRW2s/P1010416.RW2 to TestDirs/11_jpgsExtraRW2s/raw_orphans.
 Moving TestDirs/11_jpgsExtraRW2s/P1010417.RW2 to TestDirs/11_jpgsExtraRW2s/raw_orphans.
 Matched JPEGs: 2,  unMatched JPEGs: 0,  orphaned raw moved: 2
 
->>> print commands.getoutput("python remove-orphaned-raw-images.py TestDirs/12_jpgsExtraSubDirNEF+RW2s/" )
+>>> print commands.getoutput("python remove-orphans.py TestDirs/12_jpgsExtraSubDirNEF+RW2s/" )
 Moving TestDirs/12_jpgsExtraSubDirNEF+RW2s/12_jpgsExtraSubDirNEF+RW2sNEF/DSC_1380.NEF to TestDirs/12_jpgsExtraSubDirNEF+RW2s/raw_orphans.
 Moving TestDirs/12_jpgsExtraSubDirNEF+RW2s/12_jpgsExtraSubDirNEF+RW2sRW2/P1010416.RW2 to TestDirs/12_jpgsExtraSubDirNEF+RW2s/raw_orphans.
 Moving TestDirs/12_jpgsExtraSubDirNEF+RW2s/12_jpgsExtraSubDirNEF+RW2sRW2/P1010417.RW2 to TestDirs/12_jpgsExtraSubDirNEF+RW2s/raw_orphans.
 Matched JPEGs: 3,  unMatched JPEGs: 0,  orphaned raw moved: 3
 
->>> print commands.getoutput("python remove-orphaned-raw-images.py -q TestDirs/13_MixedDirRaw testDirs/13_MixedDirRawJPGs testDirs/13_MixedDirJPGs testDirs/13_MixedDirMoreJPGs" )
+>>> print commands.getoutput("python remove-orphans.py -q TestDirs/13_MixedDirRaw testDirs/13_MixedDirRawJPGs testDirs/13_MixedDirJPGs testDirs/13_MixedDirMoreJPGs" )
 'testDirs/13_MixedDirMoreJPGs/DSC_1388.JPG' is a duplicate file
 Matched JPEGs: 8,  unMatched JPEGs: 3,  orphaned raw moved: 14
 
