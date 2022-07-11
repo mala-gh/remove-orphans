@@ -87,4 +87,3 @@ def moveOrphans(rawFolder: str, jpegFolder: list, backupDir: str = None, verbose
 
     Result = collections.namedtuple("Result", ["rawTotal", "rawMoved", "jpegTotal", "jpegUnmatched"])
     return Result(len(raw_images), len(orphans), len(jpeg_images_bare_names), matched_jpegs)
-

@@ -119,6 +119,7 @@ Check <https://gist.github.com/4271012> for newer versions.
 import argparse
 import orphans
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Cleanup of leftover raw image files (*.RW2 *.NEF *.RAF).',
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
