@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 import orphans
 
+sg.theme('Reddit')
 
 # Define the window's contents
 layout = [[sg.Push(), sg.Text("RAW directory:"), sg.Input('wdir/raw', key='raw_dir'), sg.FolderBrowse()],
@@ -11,7 +12,6 @@ layout = [[sg.Push(), sg.Text("RAW directory:"), sg.Input('wdir/raw', key='raw_d
                         font='Courier 9', no_scrollbar=True)]]
 
 # Create the window
-sg.theme('Reddit')
 window = sg.Window('Remove Orphans', layout)
 
 # Display and interact with the Window using an Event Loop
