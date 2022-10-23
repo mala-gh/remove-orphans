@@ -85,5 +85,5 @@ def moveOrphans(rawFolder: str, jpegFolder: list, backupDir: str = None, verbose
     delete(orphans, backup_folder=backupDir, verbose=verbose)
     matched_jpegs = len(raw_images) - len(orphans)
 
-    Result = collections.namedtuple("Result", ["rawTotal", "rawMoved", "jpegTotal", "jpegUnmatched"])
+    Result = collections.namedtuple("Result", ["rawTotal", "rawMoved", "jpegTotal", "jpegMatched"])
     return Result(len(raw_images), len(orphans), len(jpeg_images_bare_names), matched_jpegs)

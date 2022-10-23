@@ -25,8 +25,8 @@ while True:
         # TODO: cleanup paths
         moveResult = orphans.moveOrphans(values['raw_dir'], values['jpeg_dir'], values['backup_dir'], True)
         outstr = (f"total RAWs:         {moveResult.rawTotal:4d}\n"
-                  f"matched JPEGs:      {(moveResult.jpegTotal - moveResult.jpegUnmatched):4d}\n"
-                  f"unmatched JPEGs:    {moveResult.jpegUnmatched:4d}\n"
+                  f"matched JPEGs:      {moveResult.jpegMatched:4d}\n"
+                  f"unmatched JPEGs:    {(moveResult.jpegTotal - moveResult.jpegMatched):4d}\n"
                   f"orphaned RAW moved: {moveResult.rawMoved:4d}")
         window['log_box'].update(value=outstr)
 

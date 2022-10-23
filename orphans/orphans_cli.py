@@ -140,6 +140,6 @@ if __name__ == '__main__':
     moveResult = orphans.moveOrphans(args.raw_folder, args.jpg_folders, backup_folder, verbose)
 
     print(f"total RAWs:         {moveResult.rawTotal:4d}\n"
-          f"matched JPEGs:      {(moveResult.jpegTotal - moveResult.jpegUnmatched):4d}\n"
-          f"unmatched JPEGs:    {moveResult.jpegUnmatched:4d}\n"
+          f"matched JPEGs:      {moveResult.jpegMatched:4d}\n"
+          f"unmatched JPEGs:    {(moveResult.jpegTotal - moveResult.jpegMatched):4d}\n"
           f"orphaned RAW moved: {moveResult.rawMoved:4d}")
